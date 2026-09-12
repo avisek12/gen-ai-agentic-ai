@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Streaming Chat Demo</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 3rem auto; padding: 0 1rem; }
+    #answer { border: 1px solid #ccc; border-radius: 8px; padding: 1rem; min-height: 4rem; white-space: pre-wrap; margin-top: 1rem; }
+    input { width: 70%; padding: .5rem; }
+    button { padding: .5rem 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Streaming Chat Demo</h1>
+  <p>Uses a fake model by default (see server.py) — swap in a real one to try it for real.</p>
+  <input id="question" placeholder="Ask something..." value="What is LangGraph?">
+  <button id="ask">Ask</button>
+  <div id="answer"></div>
+
+  <script>
+    document.getElementById('ask').addEventListener('click', () => {
+      const question = document.getElementById('question').value;
+      const answerEl = document.getElementById('answer');
+      answerEl.textContent = '';
+
+      const source = new EventSource('/chat?question=' + encodeURIComponent(question));
+      source.onmessage = (event) => {
+        if (event.data === '[DONE]') {
+          source.close();
+          return;
+        }
+        answerEl.textContent += event.data;
+      };
+      source.onerror = () => source.close();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Union of every example's requirements — install this if you want to run
+# run_all_tests.py across the whole repo. If you only care about one
+# example, its own requirements.txt is smaller and sufficient.
+langchain-core
+langchain-openai
+langgraph
+fastapi
+uvicorn[standard]
+httpx
+pytest
+pytest-asyncio
