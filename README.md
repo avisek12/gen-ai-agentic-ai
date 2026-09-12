@@ -28,6 +28,10 @@ Read in order if you're starting from zero:
 
 Each example's own README says exactly how to run and test it. To run every example's tests at once (each isolated in its own subprocess — see [`run_all_tests.py`](run_all_tests.py) for why that matters): `pip install -r requirements.txt && python run_all_tests.py`.
 
+## Beyond the examples: a production-shaped service
+
+[`production-rag-service/`](production-rag-service/) is a separate, deeper build — not a teaching demo. It takes the load-handling ideas above and makes them actually production-grade: a **Redis-backed** distributed rate limiter and concurrency semaphore (correct across multiple running instances, not just one process), a **real database** for durable conversation history, and a full **RAG pipeline** (chunk → embed → store → retrieve → generate) behind a swappable vector store — an in-memory one for fast, dependency-free tests, and a real **pgvector** (Postgres) backend for production. 16 tests pass with zero external services; 2 more exercise the real pgvector SQL once you run `docker compose up -d postgres`. See its own [README](production-rag-service/README.md) for the full picture.
+
 ## Why LangChain *and* LangGraph, not just one
 
 - **LangChain** is the right tool when the flow is basically linear: retrieve → prompt → generate → parse. Most RAG pipelines and single-turn tools live here.

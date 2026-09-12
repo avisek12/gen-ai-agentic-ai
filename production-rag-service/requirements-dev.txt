@@ -1,0 +1,7 @@
+-r requirements.txt
+
+pytest
+pytest-asyncio
+httpx
+fakeredis
+lupa          # gives fakeredis real Lua/EVAL support — required for tests/test_rate_limit.py

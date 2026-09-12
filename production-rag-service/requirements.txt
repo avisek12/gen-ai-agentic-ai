@@ -1,0 +1,14 @@
+# Runtime dependencies only — what actually ships in the Docker image.
+# See requirements-dev.txt for testing extras.
+fastapi
+uvicorn[standard]
+langchain-core
+langchain-openai
+langchain-text-splitters
+sqlalchemy[asyncio]>=2.0
+aiosqlite
+asyncpg
+psycopg2-binary
+pgvector
+redis
+numpy
